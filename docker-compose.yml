@@ -1,0 +1,13 @@
+version: "3.8"
+
+services:
+  demoapp:
+    image: nginx:1.29
+    ports:
+      - "8000:8080"
+
+  jenkinsapp:
+    image: jenkins/jenkins:lts
+    ports:
+      - "8001:8080"
+      

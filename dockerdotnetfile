@@ -1,0 +1,11 @@
+FROM mcr.microsoft.com/dotnet/sdk-9.0-nobel AS build
+ADD . /donetapp
+WORKDIR /dotnetapp
+RUN dotnet public -c Release /nopCommerce/src/Presentation/Nop.Web/ Nop.Web.csproj  -o NET
+FROM mcr.microsoft.com/dotnet/aspnet:9.0-nobel AS runtime
+LABEL PROJECT="DOTNETPROJECT"
+LABEL author="devopsteam"
+COPY --from=build /dotnetapp/NET /NOP
+EXPOSE 5000
+CMD["dotnet","Nop.web.dll","--urls","http://0.0.0.0"]
+

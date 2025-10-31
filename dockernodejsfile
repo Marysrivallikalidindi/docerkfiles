@@ -1,0 +1,9 @@
+FROM  node:24-alpine AS build
+ADD . /nodejsapp
+WORKDIR /nodejsapp
+Run npm install && \
+    npm run build
+FROM nginx:alpine AS runtime
+LABEL PROJECT="nodejsproject"
+COPY --from=build /nodejsapp/build /usr/share/nginx/html
+EXPOSE 80
